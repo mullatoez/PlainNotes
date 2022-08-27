@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PlainNotes</string>
+    <string name="notes">Notes</string>
+    <string name="enter_note">Enter note</string>
+</resources>
