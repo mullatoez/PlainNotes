@@ -43,7 +43,13 @@ class MainFragment : Fragment(), NotesListAdapter.ListItemListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu, menu)
+        val menuId =
+            if (this::adapter.isInitialized && adapter.selectedNotes.isNotEmpty()) {
+                R.menu.menu_selected_items
+            } else {
+                R.menu.main_menu
+            }
+        inflater.inflate(menuId, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -63,6 +69,10 @@ class MainFragment : Fragment(), NotesListAdapter.ListItemListener {
         Log.i("TAG", "TAG: ${noteId}")
         val action = MainFragmentDirections.actionNoteEditor(noteId)
         findNavController().navigate(action)
+    }
+
+    override fun onItemSelectionChange() {
+        requireActivity().invalidateOptionsMenu()
     }
 
 }
