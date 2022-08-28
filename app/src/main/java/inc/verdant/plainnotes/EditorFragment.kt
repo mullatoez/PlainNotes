@@ -2,10 +2,8 @@ package inc.verdant.plainnotes
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
@@ -32,10 +30,13 @@ class EditorFragment : Fragment() {
             }
         )
 
+
+
         binding = FragmentEditorBinding.inflate(inflater, container, false)
         binding.editor.setText("You selected note id ${args.noteId}")
         return binding.root
     }
+
 
     private fun saveAndReturn(): Boolean {
         findNavController().navigateUp()

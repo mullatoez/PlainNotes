@@ -12,7 +12,8 @@ abstract class NotesDatabase: RoomDatabase() {
 
     abstract fun noteDao(): NoteDao?
 
-    companion object {
+   /* companion object {
+
         private var INSTANCE: NotesDatabase? = null
 
         fun getInstance(context: Context) : RoomDatabase?{
@@ -28,5 +29,5 @@ abstract class NotesDatabase: RoomDatabase() {
 
             return INSTANCE
         }
-    }
+    }*/
 }
