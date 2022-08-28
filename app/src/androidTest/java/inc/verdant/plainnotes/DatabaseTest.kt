@@ -4,6 +4,7 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import inc.verdant.plainnotes.data.NoteDao
+import inc.verdant.plainnotes.data.NoteEntity
 import inc.verdant.plainnotes.data.NotesDatabase
 import inc.verdant.plainnotes.data.SampleDataProvider
 import org.junit.After
@@ -14,11 +15,6 @@ import org.junit.runner.RunWith
 import org.junit.Assert.*
 import org.junit.Before
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 @RunWith(AndroidJUnit4::class)
 class DatabaseTest {
 
@@ -39,6 +35,20 @@ class DatabaseTest {
         dao.insertNotes(SampleDataProvider.getNotes())
         val count = dao.getCount()
         assertEquals(count,SampleDataProvider.getNotes().size)
+    }
+
+    @Test
+    fun insertNote(){
+
+        //prepare data
+        val note = NoteEntity()
+        val sampleNote = "This is a sample note"
+        note.text = sampleNote
+        dao.insertNote(note)
+
+        //get data for testing
+        val savedNote = dao.getNoteById(1)
+        assertEquals(savedNote?.id ?: 0,1)
     }
 
     @After
