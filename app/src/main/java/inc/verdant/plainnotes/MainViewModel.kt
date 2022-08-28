@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import inc.verdant.plainnotes.data.NoteDao
+import inc.verdant.plainnotes.data.NoteEntity
 import inc.verdant.plainnotes.data.NotesDatabase
 import inc.verdant.plainnotes.data.SampleDataProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.ArrayList
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -30,6 +32,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 db.noteDao()!!.insertNotes(sampleNotes)
             }
 
+        }
+    }
+
+    fun deleteNotes(notes: List<NoteEntity>) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                db.noteDao()!!.deleteNotes(notes)
+            }
+        }
+    }
+
+    fun deleteAllNotes() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                db.noteDao()!!.deleteAllNotes()
+            }
         }
     }
 }

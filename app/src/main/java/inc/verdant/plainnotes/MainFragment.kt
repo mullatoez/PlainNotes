@@ -2,6 +2,8 @@ package inc.verdant.plainnotes
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -56,8 +58,24 @@ class MainFragment : Fragment(), NotesListAdapter.ListItemListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_note -> addSampleData()
+            R.id.delete_note -> deleteNotes()
+            R.id.delete_all_notes -> deleteAllNotes()
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun deleteAllNotes(): Boolean {
+        viewModel.deleteAllNotes()
+return true
+    }
+
+    private fun deleteNotes(): Boolean {
+        viewModel.deleteNotes(adapter.selectedNotes)
+        Handler(Looper.getMainLooper()).postDelayed({
+            adapter.selectedNotes.clear()
+            requireActivity().invalidateOptionsMenu()
+        }, 100)
+        return true
     }
 
     private fun addSampleData(): Boolean {

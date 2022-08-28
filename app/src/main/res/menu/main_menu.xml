@@ -6,4 +6,9 @@
         android:id="@+id/add_note"
         android:icon="@drawable/ic_add_24"
         android:title="Add Sample Note" />
+
+    <item
+        android:id="@+id/delete_all_notes"
+        android:icon="@drawable/ic_delete_24"
+        android:title="Delete All Notes" />
 </menu>

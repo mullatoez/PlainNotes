@@ -6,6 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import inc.verdant.plainnotes.databinding.FragmentEditorBinding
@@ -30,10 +31,17 @@ class EditorFragment : Fragment() {
             }
         )
 
-
+        viewModel = ViewModelProvider(this).get(EditorViewModel::class.java)
 
         binding = FragmentEditorBinding.inflate(inflater, container, false)
-        binding.editor.setText("You selected note id ${args.noteId}")
+        binding.editor.setText("")
+
+        viewModel.currentNote.observe(viewLifecycleOwner, Observer {
+            binding.editor.setText(it!!.text)
+        })
+
+        viewModel.getNoteById(args.noteId)
+
         return binding.root
     }
 
@@ -42,11 +50,4 @@ class EditorFragment : Fragment() {
         findNavController().navigateUp()
         return true
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EditorViewModel::class.java)
-
-    }
-
 }

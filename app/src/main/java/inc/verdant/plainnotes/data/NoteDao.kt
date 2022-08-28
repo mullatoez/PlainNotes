@@ -1,10 +1,7 @@
 package inc.verdant.plainnotes.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface NoteDao {
@@ -23,4 +20,10 @@ interface NoteDao {
 
     @Query("SELECT COUNT(*) FROM notes")
     fun getCount(): Int
+
+    @Delete
+    fun deleteNotes(notes: List<NoteEntity>) : Int
+
+    @Query("DELETE FROM notes")
+    fun deleteAllNotes() : Int
 }
