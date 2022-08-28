@@ -2,4 +2,6 @@
     <string name="app_name">PlainNotes</string>
     <string name="notes">Notes</string>
     <string name="enter_note">Enter note</string>
+    <string name="add_new_note">Add New Note</string>
+    <string name="new_note">New Note</string>
 </resources>

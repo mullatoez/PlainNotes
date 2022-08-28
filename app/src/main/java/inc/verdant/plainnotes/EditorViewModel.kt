@@ -15,7 +15,8 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
     val db = Room.databaseBuilder(
         application,
         NotesDatabase::class.java, "notes.db"
-    ).build()
+    ).allowMainThreadQueries()
+        .build()
     val currentNote = MutableLiveData<NoteEntity?>()
 
     fun getNoteById(noteId: Int) {
@@ -31,5 +32,25 @@ class EditorViewModel(application: Application) : AndroidViewModel(application) 
                 currentNote.postValue(note)
             }
         }
+    }
+
+    fun updateNote() {
+
+        currentNote.value?.let {
+            it.text = it.text.trim()
+            if (it.id == NEW_NOTE_ID && it.text.isEmpty()) {
+                return
+            }
+
+            viewModelScope.launch {
+                if (it.text.isEmpty()) {
+                    db.noteDao()?.deleteNote(it)
+                } else {
+                    db.noteDao()?.insertNote(it)
+                }
+            }
+        }
+
+
     }
 }
