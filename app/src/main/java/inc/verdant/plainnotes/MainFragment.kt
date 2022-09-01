@@ -28,7 +28,7 @@ class MainFragment : Fragment(), NotesListAdapter.ListItemListener {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         setHasOptionsMenu(true)
 
@@ -40,11 +40,12 @@ class MainFragment : Fragment(), NotesListAdapter.ListItemListener {
             addItemDecoration(divider)
         }
 
-        viewModel.notes?.observe(viewLifecycleOwner, Observer {
+        viewModel.notes.observe(viewLifecycleOwner, Observer {
             Log.i("NOTES TAG", "Notes: ${it.toString()}")
             adapter = NotesListAdapter(it, this@MainFragment)
             binding.recyclerview.adapter = adapter
             binding.recyclerview.layoutManager = LinearLayoutManager(activity)
+
         })
 
         binding.floatingActionButton.setOnClickListener {
